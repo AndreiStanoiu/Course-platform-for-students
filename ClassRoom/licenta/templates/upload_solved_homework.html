@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <!-- sidebar content here -->
+        <div class="sidebar">
+          <h2>Upload Solved Homework</h2>
+          <ul>
+            <li>Upload your solved homework here</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <!-- main content here -->
+        <h1>Upload Solved Homework</h1>
+        {% if error %}
+          <p style="color: red;">{{ error }}</p>
+        {% endif %}
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

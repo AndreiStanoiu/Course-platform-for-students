@@ -1,0 +1,72 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <!-- sidebar content here -->
+        <div class="sidebar">
+          <h2>Homework Details</h2>
+          <ul>
+            <li>Due Date: {{ homework.due_date }}</li>
+            <li>Uploaded At: {{ homework.uploaded_at }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <!-- main content here -->
+        <h1>{{ homework.title }}</h1>
+        {% if homework.file %}
+          <p>File: <a href="{{ homework.file.url }}" download>{{ homework.file.name }}</a></p>
+        {% else %}
+          <p>No file uploaded.</p>
+        {% endif %}
+        
+        {% if request.user.profile.user_type == 'teacher' %}
+          <h2>Submitted Homeworks</h2>
+          <ul>
+            {% for sh in solved_homeworks %}
+              <li>
+                <a href="{{ sh.file.url }}" download>{{ sh.student.username }}</a>
+                <form method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="solved_homework_id" value="{{ sh.pk }}">
+                  <input type="number" name="grade" value="{{ sh.grade }}" min="0" max="100">
+                  <button type="submit">Grade</button>
+                </form>
+                {% if sh.grade %}
+                  - Grade: {{ sh.grade }}
+                {% else %}
+                  - Not graded yet
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        {% elif request.user.profile.user_type == 'student' %}
+          <h2>Your Submission</h2>
+          {% if solved_homeworks %}
+            <ul>
+              {% for sh in solved_homeworks %}
+                <li>
+                  <a href="{{ sh.file.url }}" download>{{ sh.file.url }}</a>
+                  {% if sh.grade %}
+                    - Grade: {{ sh.grade }}
+                  {% else %}
+                    - Not graded yet
+                  {% endif %}
+                  <form method="post" action="{% url 'delete_solved_homework' homework_id=homework.pk solved_homework_id=sh.pk %}">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                  </form>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>No submission yet.</p>
+          {% endif %}
+          <a href="{% url 'upload_solved' homework_id=homework.pk %}">Upload Solved Homework</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
