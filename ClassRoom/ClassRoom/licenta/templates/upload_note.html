@@ -1,0 +1,25 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<h1>Add Note</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- Add form fields for note upload here -->
+    <br>
+    <label>Title:</label>
+    {{form.title}}
+    <br><br>
+    <label>File:</label>
+    {{form.file}}
+    <br><br>
+    <label>Content:</label>
+    {{form.content}}
+    <br><br>
+
+
+    <button type="submit">Upload Note</button>
+</form>
+
+{% endblock %}

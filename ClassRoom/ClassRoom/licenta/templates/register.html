@@ -1,0 +1,187 @@
+<head>
+	<style>
+	body {
+		font-family: "Lato", sans-serif;
+	}
+	
+	
+
+	.sidenav {
+		height: 100%;
+		background-color: #000;
+		overflow-x: hidden;
+		padding-top: 20px;
+	}
+	
+	
+	.main {
+		padding: 0px 10px;
+	}
+	
+	@media screen and (max-height: 450px) {
+		.sidenav {padding-top: 15px;}
+	}
+	
+	@media screen and (max-width: 450px) {
+		.login-form{
+			margin-top: 10%;
+		}
+	
+		.register-form{
+			margin-top: 10%;
+		}
+	}
+	
+	@media screen and (min-width: 768px){
+		.main{
+			margin-left: 40%; 
+		}
+	
+		.sidenav{
+			width: 40%;
+			position: fixed;
+			z-index: 1;
+			top: 0;
+			left: 0;
+		}
+	
+		.login-form{
+			margin-top: 5%;
+		}
+	
+		.register-form{
+			margin-top: 5%;
+		}
+	}
+	
+	
+	.login-main-text{
+		margin-top: 5%;
+		padding: 60px;
+		color: #fff;
+	}
+	
+	.login-main-text h2{
+		font-weight: 300;
+	}
+	
+	.btn-black{
+		background-color: #000 !important;
+		color: #fff;
+	} 
+	</style>
+	
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	
+	</head>
+<body>
+
+	<div class="sidenav">
+		<div class="login-main-text">
+		   <h2>ClassRoom <br> Register Page</h2>
+		   <p>Create your account now</p>
+		</div>
+	 </div>
+	 <div class="main">
+		<div class="col-md-6 col-sm-12">
+		   <div class="login-form">
+					<form method="POST" action="">
+						{% csrf_token %}
+						<div class="form-group">
+							<label>Full Name</label>
+							<br>
+							{{profile_form.fullname}}
+							 </div>
+						 <div class="form-group">
+							<label>Student/Teacher</label>
+							<br>
+							{{profile_form.user_type}}
+							
+							</select>
+						 </div>
+
+						 <div class="form-group">
+							<label>Bachelors</label>
+							<br>
+							{{profile_form.is_bachelor}}
+
+						 </div>
+
+						 <div class="form-group">
+							<label>Masters</label>
+							<br>
+							{{profile_form.is_masters}}
+						 </div>
+						 <div class="form-group">
+							<label>Study year</label>
+							<br>
+							{{profile_form.year}}
+
+						 </div>
+						 
+
+						<div class="form-group">
+							<label>User Name</label>
+							<br>
+							{{form.username}}
+							
+
+						 </div>
+							
+						 <div class="form-group">
+							<label>Password</label>
+							<br>
+							{{form.password1}}
+							
+
+						 </div>
+							
+						
+						 <div class="form-group">
+							<label>Confirm Password</label>
+							<br>
+							{{form.password2}}
+
+						 </div>
+				   	
+				 		<input  class="btn btn-secondary" type="submit" value="Register Account">
+				   		
+
+					</form>
+				
+
+				{{form.errors}}
+				
+		
+						Already have an account? <a href="{% url 'login' %}" class="btn btn-black">Login</a>
+					
+				</div>
+			</div>
+		</div>
+	 </div>
+
+	 <script>
+		/* Because i didnt set placeholder values in forms.py they will be set here using vanilla Javascript
+//We start indexing at one because CSRF_token is considered and input field 
+*/
+
+//Query All input fields
+var form_fields = document.getElementsByTagName('input')
+form_fields[1].placeholder='Fullname..';
+
+form_fields[2].placeholder='Study year...';
+
+form_fields[3].placeholder='Username..';
+
+form_fields[4].placeholder='Enter password...';
+form_fields[5].placeholder='Re-enter Password...';
+
+
+for (var field in form_fields){	
+form_fields[field].className += ' form-control'
+}
+</script>
+
+	</body>

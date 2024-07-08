@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <!-- sidebar content here -->
+        <div class="sidebar">
+          <h2>Your Grades</h2>
+          <ul>
+            <li>View your grades here</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <!-- main content here -->
+        <h1>Your Grades</h1>
+        <ul class="list-group">
+          {% for solved_homework in solved_homeworks %}
+            <li class="list-group-item">
+              {{ solved_homework.homework.title }} - Grade: {{ solved_homework.grade }}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}
